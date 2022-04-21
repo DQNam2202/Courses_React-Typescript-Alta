@@ -32,7 +32,8 @@ export const courseReducer = (
         list.splice(indexItems, 1);
       }
       return [...list];
-    // case ActionType.FETCH_DATA
+    case ActionType.FETCH_DATA:
+      return actions.payload;
     default:
       return [...state];
   }
