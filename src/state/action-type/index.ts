@@ -1,0 +1,7 @@
+export enum ActionType {
+  GET_COURSE,
+  FETCH_DATA,
+  ADD_COURSES,
+  DELETE_COURSES,
+  UPDATED_COURSES,
+}
