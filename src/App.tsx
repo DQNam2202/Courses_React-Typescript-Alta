@@ -6,6 +6,7 @@ import { actionCreators } from './state';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Course from './components/Course/Course';
+import Add from './components/Add/Add';
 function App() {
   const dispatch = useDispatch();
   const { fetchCourseAPI } = bindActionCreators(actionCreators, dispatch);
@@ -18,6 +19,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Course></Course>} />
+          <Route path='/add' element={<Add></Add>} />
         </Routes>
       </BrowserRouter>
     </div>

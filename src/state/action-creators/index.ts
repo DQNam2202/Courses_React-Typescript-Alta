@@ -23,10 +23,16 @@ export const updatedCourse = (courseUpdate: CoursesUpdated) => {
 
 export const deleteCourse = (id: string) => {
   return (dispatch: Dispatch<Action>) => {
-    dispatch({
-      type: ActionType.DELETE_COURSES,
-      payload: id,
-    });
+    CourseAPI.deleteCourses(id)
+      .then(res => {
+        dispatch({
+          type: ActionType.DELETE_COURSES,
+          payload: id,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 };
 
