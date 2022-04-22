@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient';
-import { Courses, CoursesUpdated } from '../state/action';
+import { Courses, CoursesCreate, CoursesUpdated } from '../state/action';
 const baseURL = '';
 
 export interface CourseUpdatedRes {
@@ -11,6 +11,9 @@ export interface CourseUpdatedRes {
   buyAmount?: number;
   bestSeller?: boolean;
 }
+interface CoursesCreateRes {
+  name: string;
+}
 
 const CourseAPI = {
   getCoursesList() {
@@ -18,9 +21,9 @@ const CourseAPI = {
     return axiosClient.get<Courses[], Courses[]>(url);
   },
 
-  addCourses(course: Courses) {
+  addCourses(course: CoursesCreate) {
     const url = baseURL + '.json';
-    return axiosClient.post<string>(url, course);
+    return axiosClient.post<CoursesCreateRes, CoursesCreateRes>(url, course);
   },
 
   updatedCourses(courseUpdated: CoursesUpdated) {

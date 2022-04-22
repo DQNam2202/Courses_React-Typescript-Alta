@@ -81,6 +81,7 @@
 .course-meta {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   margin-bottom: 15px;
   gap: 0 10px;
 }

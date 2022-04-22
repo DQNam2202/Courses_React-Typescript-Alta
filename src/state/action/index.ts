@@ -11,6 +11,16 @@ export interface Courses {
   bestSeller: boolean;
 }
 
+export interface CoursesCreate {
+  title: string;
+  author: string;
+  image: string;
+  price: number;
+  rating: number;
+  buyAmount: number;
+  bestSeller: boolean;
+}
+
 export interface CoursesUpdated {
   id: string;
   title?: string;

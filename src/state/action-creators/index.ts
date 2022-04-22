@@ -1,13 +1,19 @@
 import { Dispatch } from 'redux';
 import CourseAPI from '../../API/coursesAPI';
-import { Action, Courses, CoursesUpdated } from '../action';
+import { Action, Courses, CoursesUpdated, CoursesCreate } from '../action';
 import { ActionType } from '../action-type';
 
-export const addCourse = (courses: Courses) => {
+export const addCourse = (courseCreate: CoursesCreate) => {
   return (dispatch: Dispatch<Action>) => {
-    dispatch({
-      type: ActionType.ADD_COURSES,
-      payload: courses,
+    CourseAPI.addCourses(courseCreate).then(data => {
+      let course: Courses = {
+        id: data.name,
+        ...courseCreate,
+      };
+      dispatch({
+        type: ActionType.ADD_COURSES,
+        payload: course,
+      });
     });
   };
 };
