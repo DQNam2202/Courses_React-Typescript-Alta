@@ -18,11 +18,14 @@ export const addCourse = (courseCreate: CoursesCreate) => {
   };
 };
 
-export const updatedCourse = (courseUpdate: CoursesUpdated) => {
+export const updatedCourse = (course: CoursesUpdated) => {
   return (dispatch: Dispatch<Action>) => {
-    dispatch({
-      type: ActionType.UPDATED_COURSES,
-      payload: courseUpdate,
+    CourseAPI.updatedCourses(course).then(res => {
+      let courseUpdated: CoursesUpdated = { ...res };
+      dispatch({
+        type: ActionType.UPDATED_COURSES,
+        payload: courseUpdated,
+      });
     });
   };
 };

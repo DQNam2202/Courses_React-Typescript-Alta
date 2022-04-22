@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
 import { State } from '../../state/reducer';
@@ -32,9 +32,9 @@ const Course = () => {
             <div className='course-item' key={index}>
               <div className='course-image'>
                 <img src={item.image} alt={item.author} />
-                <button className='course-edit' data-id=''>
+                <Link to={`/update/${item.id}`} className='course-edit'>
                   <i className='fa fa-pencil' />
-                </button>
+                </Link>
                 <button
                   className='course-remove'
                   data-id=''

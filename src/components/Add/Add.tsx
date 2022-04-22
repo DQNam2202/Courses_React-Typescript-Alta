@@ -11,6 +11,7 @@ interface ErrorMessage {
   title: string;
   author: string;
   price: string;
+  image: string;
   rating: string;
   buyAmount: string;
 }
@@ -18,10 +19,11 @@ interface ErrorMessage {
 const Add = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
+
   const errorRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { addCourse } = bindActionCreators(actionCreators, dispatch);
   // State image
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('https://source.unsplash.com/random/');
   // State Course
   const [course, setCourse] = useState<CoursesCreate>({
     title: '',
@@ -32,24 +34,19 @@ const Add = () => {
     buyAmount: 0,
     bestSeller: false,
   });
-
-  // Random String
-  const randomStr = Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, '')
-    .substr(0, 5);
   // Event handel random image
-  const handelRandomImage = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    const url = 'https://source.unsplash.com/random/';
-    setImage(url + randomStr + '.png');
-    console.log(image);
-  };
+  // const handelRandomImage = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  //   e.preventDefault();
+  //   const url = 'https://source.unsplash.com/random/';
+  //   setImage(url + randomStr + '.png');
+  //   console.log(image);
+  // };
+
   // View first after render templated
-  useEffect(() => {
-    const url = 'https://source.unsplash.com/random/';
-    setImage(url + randomStr + '.png');
-  }, []);
+  // useEffect(() => {
+  //   const url = 'https://source.unsplash.com/random/';
+  //   setImage();
+  // }, []);
 
   // state validated:
   const [error, setError] = useState({
@@ -60,10 +57,19 @@ const Add = () => {
     rating: '',
     buyAmount: '',
   });
+  const handelErrorImage = (e: any): void => {
+    e.target.onerror = null;
+    setImage(
+      'https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+    );
+  };
   // Function handelOnChange
   const handelOnChange = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const target = e.target as HTMLInputElement;
+    if (target.name === 'image') {
+      setImage(target.value);
+    }
     setCourse({ ...course, [target.name]: target.value });
     if (errorRef.current) {
       clearInterval(errorRef.current);
@@ -123,7 +129,6 @@ const Add = () => {
     ) {
       let newCourse: CoursesCreate = {
         ...course,
-        image: image,
         bestSeller: checked,
       };
       addCourse({
@@ -198,15 +203,19 @@ const Add = () => {
           </label>
           <input type='checkbox' checked={checked} onChange={handleChecked} />
         </div>
-        <div className=''>
-          <div className='content'>
-            <div className='imgBox'>
-              <img src={image} />
-            </div>
-            <button className='randomImage' onClick={handelRandomImage}>
-              Random image
-            </button>
+        <div className='text-field'>
+          <label htmlFor='username3'>Thumbnail</label>
+          <input
+            autoComplete='off'
+            type='text'
+            name='image'
+            onChange={handelOnChange}
+            value={course.image as string}
+          />
+          <div className='imgBox'>
+            <img src={image} alt='images' onError={handelErrorImage} />
           </div>
+          <p className='error'>{error?.image}</p>
         </div>
         <div className='inputSubmit'>
           <button type='submit' className='btnSubmit'>

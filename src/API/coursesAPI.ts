@@ -28,8 +28,10 @@ const CourseAPI = {
 
   updatedCourses(courseUpdated: CoursesUpdated) {
     const url = baseURL + `/${courseUpdated.id}.json`;
-
-    return axiosClient.patch(url, courseUpdated);
+    return axiosClient.patch<CoursesUpdated, CoursesUpdated>(
+      url,
+      courseUpdated,
+    );
   },
 
   deleteCourses(id: string) {
